@@ -4,6 +4,8 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>beaudry.sii.Autor</class>
     <class>beaudry.sii.Articulo</class>
+    <class>grupog.agendamlg.Destinatario</class>
+    <class>grupog.agendamlg.Etiqueta</class>
     <properties>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="javax.persistence.schema-generation.scripts.action" value="create"/>

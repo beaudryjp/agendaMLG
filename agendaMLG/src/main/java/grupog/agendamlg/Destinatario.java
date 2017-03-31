@@ -2,24 +2,35 @@
 package grupog.agendamlg;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
-* Roles.java
+* Destinatario.java
 *
 * Mar 31, 2017
 * @author Jean Paul Beaudry
 */
 @Entity
-public class Roles implements Serializable {
+public class Destinatario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name="descripcion", nullable=false)
+    private String descripcion;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
     public Long getId() {
         return id;
@@ -39,10 +50,10 @@ public class Roles implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Roles)) {
+        if (!(object instanceof Destinatario)) {
             return false;
         }
-        Roles other = (Roles) object;
+        Destinatario other = (Destinatario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -51,7 +62,7 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg_jpa.Roles[ id=" + id + " ]";
+        return "grupog.agendamlg.Destinatario[ id=" + id + " ]";
     }
 
 }

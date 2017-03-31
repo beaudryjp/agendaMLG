@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
 * Comentario.java
@@ -21,23 +24,29 @@ public class Comentario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_comment;
     private String mensaje;
+    @Temporal(TemporalType.DATE)
     private Date fecha;
+    @Temporal(TemporalType.TIME)
     private Time hora;
+    @ManyToOne
+    private Evento evento;
+    @ManyToOne
+    private Usuario usuario;
 
     public Long getId() {
-        return id;
+        return id_comment;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_comment = id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id_comment != null ? id_comment.hashCode() : 0);
         return hash;
     }
 
@@ -72,7 +81,7 @@ public class Comentario implements Serializable {
             return false;
         }
         Comentario other = (Comentario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.id_comment == null && other.id_comment != null) || (this.id_comment != null && !this.id_comment.equals(other.id_comment))) {
             return false;
         }
         return true;
@@ -80,7 +89,7 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg_jpa.Comentario[ id=" + id + " ]";
+        return "grupog.agendamlg_jpa.Comentario[ id=" + id_comment + " ]";
     }
 
 }

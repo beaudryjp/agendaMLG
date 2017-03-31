@@ -2,6 +2,7 @@
 package grupog.agendamlg;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,12 +21,21 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name="nombre", nullable=false)
     private String nombre;
-    private String password;
+    @Column(name="apellidos", nullable=false)
+    private String apellidos;
+    @Column(name="email", nullable=false)
     private String email;
-    private Long pos_h;
-    private Long pos_v;
-    private boolean notificaciones;
+    @Column(name="email_notifier", nullable=false)
+    private boolean email_notifier;
+    @Column(name="password_hash", nullable=false)
+    private String password_hash;
+    @Column(name="sal", nullable=false)
+    private String sal;
+    private Long longitud;
+    private Long latitud;
+    @OneToMany(cascade=CascadeType.ALL)
 
     public String getNombre() {
         return nombre;
@@ -36,11 +46,11 @@ public class Usuario implements Serializable {
     }
 
     public String getPassword() {
-        return password;
+        return password_hash;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password_hash = password;
     }
 
     public String getEmail() {
@@ -52,27 +62,27 @@ public class Usuario implements Serializable {
     }
 
     public Long getPos_h() {
-        return pos_h;
+        return longitud;
     }
 
     public void setPos_h(Long pos_h) {
-        this.pos_h = pos_h;
+        this.longitud = pos_h;
     }
 
     public Long getPos_v() {
-        return pos_v;
+        return latitud;
     }
 
     public void setPos_v(Long pos_v) {
-        this.pos_v = pos_v;
+        this.latitud = pos_v;
     }
 
     public boolean isNotificaciones() {
-        return notificaciones;
+        return email_notifier;
     }
 
     public void setNotificaciones(boolean notificaciones) {
-        this.notificaciones = notificaciones;
+        this.email_notifier = notificaciones;
     }
 
     public Long getId() {

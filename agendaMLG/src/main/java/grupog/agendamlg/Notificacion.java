@@ -2,10 +2,14 @@
 package grupog.agendamlg;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
 * Notificacion.java
@@ -19,8 +23,12 @@ public class Notificacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_notificacion;
     private String mensaje;
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    @Temporal(TemporalType.TIME)
+    private Time hora;
 
     public String getMensaje() {
         return mensaje;
@@ -31,17 +39,17 @@ public class Notificacion implements Serializable {
     }
 
     public Long getId() {
-        return id;
+        return id_notificacion;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.id_notificacion = id;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id_notificacion != null ? id_notificacion.hashCode() : 0);
         return hash;
     }
 
@@ -52,7 +60,7 @@ public class Notificacion implements Serializable {
             return false;
         }
         Notificacion other = (Notificacion) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.id_notificacion == null && other.id_notificacion != null) || (this.id_notificacion != null && !this.id_notificacion.equals(other.id_notificacion))) {
             return false;
         }
         return true;
@@ -60,7 +68,7 @@ public class Notificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg_jpa.Notificacion[ id=" + id + " ]";
+        return "grupog.agendamlg_jpa.Notificacion[ id=" + id_notificacion + " ]";
     }
 
 }
