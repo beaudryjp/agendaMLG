@@ -3,6 +3,7 @@ package grupog.agendamlg;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,13 +38,13 @@ public class Localidad implements Serializable {
     @ManyToOne
     private Provincia provincia;
     @OneToMany(mappedBy="localidad")
-    private Evento evento;
-
-    public Evento getEvento() {
+    private Set<Evento> evento;
+    
+    public Set<Evento> getEvento() {
         return evento;
     }
 
-    public void setEvento(Evento evento) {
+    public void setEvento(Set<Evento> evento) {
         this.evento = evento;
     }
     

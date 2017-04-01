@@ -28,7 +28,6 @@ public class Notificacion implements Serializable {
     private String mensaje;
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Temporal(TemporalType.TIME)
     private Time hora;
     @ManyToOne(optional=true)
     private Usuario usuario;

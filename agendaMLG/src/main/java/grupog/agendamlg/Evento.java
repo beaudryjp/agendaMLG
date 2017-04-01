@@ -41,7 +41,6 @@ public class Evento implements Serializable {
     private Date fecha_inicio;
     @Temporal(TemporalType.DATE)
     private Date fecha_fin;
-    @Temporal(TemporalType.TIME)
     private Time hora;
     private String precio;
     private Long longitud;
@@ -66,8 +65,8 @@ public class Evento implements Serializable {
     private Set<Usuario> asiste;
     
     @OneToMany
-    @JoinTable(name="jn_rol_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_rol"))
-    private Set <Rol> rol;
+    //@JoinTable(name="jn_rol_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="pk"))
+    private Set<Rol> rol;
     
     @ManyToMany
     @JoinTable(name="jn_destinatario_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_destinatario"))

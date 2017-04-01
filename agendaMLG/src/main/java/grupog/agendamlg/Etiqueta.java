@@ -3,6 +3,7 @@ package grupog.agendamlg;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,15 @@ public class Etiqueta implements Serializable {
     @Column(name="nombre", nullable=false)
     private String nombre;
     @ManyToMany(mappedBy="etiqueta")
-    private Evento evento;
+    private Set<Evento> evento;
+
+    public Set<Evento> getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Set<Evento> evento) {
+        this.evento = evento;
+    }
 
     public String getNombre() {
         return nombre;
@@ -38,14 +47,6 @@ public class Etiqueta implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Evento getEvento() {
-        return evento;
-    }
-
-    public void setEvento(Evento evento) {
-        this.evento = evento;
     }
 
     public Long getId_etiqueta() {
