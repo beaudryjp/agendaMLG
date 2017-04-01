@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,7 +30,27 @@ public class Notificacion implements Serializable {
     private Date fecha;
     @Temporal(TemporalType.TIME)
     private Time hora;
+    @ManyToOne(optional=true)
+    private Usuario user;
+    @ManyToOne(optional=true)
+    private Evento evento;
+    
 
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
     public String getMensaje() {
         return mensaje;
     }
@@ -38,13 +59,32 @@ public class Notificacion implements Serializable {
         this.mensaje = mensaje;
     }
 
-    public Long getId() {
+
+    public Long getId_notificacion() {
         return id_notificacion;
     }
 
-    public void setId(Long id) {
-        this.id_notificacion = id;
+    public void setId_notificacion(Long id_notificacion) {
+        this.id_notificacion = id_notificacion;
     }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Time getHora() {
+        return hora;
+    }
+
+    public void setHora(Time hora) {
+        this.hora = hora;
+    }
+    
+    
 
     @Override
     public int hashCode() {
@@ -68,7 +108,9 @@ public class Notificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg_jpa.Notificacion[ id=" + id_notificacion + " ]";
+        return "Notificacion{" + "id_notificacion=" + id_notificacion + ", mensaje=" + mensaje + ", fecha=" + fecha + ", hora=" + hora + ", user=" + user + ", evento=" + evento + '}';
     }
+
+    
 
 }

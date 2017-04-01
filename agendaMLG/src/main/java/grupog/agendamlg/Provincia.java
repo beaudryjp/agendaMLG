@@ -2,7 +2,8 @@
 package grupog.agendamlg;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import org.eclipse.persistence.jpa.config.Cascade;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
 * Provincia.java
@@ -19,23 +21,24 @@ import org.eclipse.persistence.jpa.config.Cascade;
 * @author Jean Paul Beaudry
 */
 @Entity
+@Table( uniqueConstraints = @UniqueConstraint(columnNames = {"nombre"}))
 public class Provincia implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_provincia;
     @Column(name="nombre", nullable=false)
     private String nombre;
-    @OneToMany(cascade=CascadeType.ALL)
-    private List<Localidad> localidades;
+    @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+    private Set<Localidad> localidades;
 
-    public Long getId() {
-        return id;
+    public Long getId_provincia() {
+        return id_provincia;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_provincia(Long id) {
+        this.id_provincia = id;
     }
 
     public String getNombre() {
@@ -48,19 +51,28 @@ public class Provincia implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.id_provincia);
+        hash = 71 * hash + Objects.hashCode(this.nombre);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Provincia)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Provincia other = (Provincia) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Provincia other = (Provincia) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_provincia, other.id_provincia)) {
             return false;
         }
         return true;
@@ -68,7 +80,11 @@ public class Provincia implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg_jpa.Provincia[ id=" + id + " ]";
+        return "Provincia{" + "id_provincia=" + id_provincia + ", nombre=" + nombre + ", localidades=" + localidades + '}';
     }
+
+    
+
+   
 
 }

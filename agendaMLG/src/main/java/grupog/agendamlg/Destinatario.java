@@ -2,11 +2,15 @@
 package grupog.agendamlg;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
 * Destinatario.java
@@ -15,14 +19,25 @@ import javax.persistence.Id;
 * @author Jean Paul Beaudry
 */
 @Entity
+@Table( uniqueConstraints = @UniqueConstraint(columnNames = {"descripcion"}))
 public class Destinatario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_destinatario;
     @Column(name="descripcion", nullable=false)
     private String descripcion;
+    @ManyToOne(optional=true)
+    private Evento evento;
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
 
     public String getDescripcion() {
         return descripcion;
@@ -32,29 +47,38 @@ public class Destinatario implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Long getId() {
-        return id;
+    public Long getId_destinatario() {
+        return id_destinatario;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_destinatario(Long id_destinatario) {
+        this.id_destinatario = id_destinatario;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id_destinatario);
+        hash = 59 * hash + Objects.hashCode(this.descripcion);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Destinatario)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Destinatario other = (Destinatario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Destinatario other = (Destinatario) obj;
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_destinatario, other.id_destinatario)) {
             return false;
         }
         return true;
@@ -62,7 +86,11 @@ public class Destinatario implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg.Destinatario[ id=" + id + " ]";
+        return "Destinatario{" + "id_destinatario=" + id_destinatario + ", descripcion=" + descripcion + ", evento=" + evento + '}';
     }
+
+    
+
+    
 
 }

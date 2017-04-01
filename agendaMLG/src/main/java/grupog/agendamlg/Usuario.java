@@ -2,11 +2,21 @@
 package grupog.agendamlg;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
 * Usuario.java
@@ -15,16 +25,19 @@ import javax.persistence.Id;
 * @author Jean Paul Beaudry
 */
 @Entity
+@Table( uniqueConstraints = @UniqueConstraint(columnNames = {"email","pseudonimo","sal"}))
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_usuario;
     @Column(name="nombre", nullable=false)
     private String nombre;
     @Column(name="apellidos", nullable=false)
     private String apellidos;
+    @Column(name="pseudonimo", nullable=false)
+    private String pseudonimo;
     @Column(name="email", nullable=false)
     private String email;
     @Column(name="email_notifier", nullable=false)
@@ -35,7 +48,30 @@ public class Usuario implements Serializable {
     private String sal;
     private Long longitud;
     private Long latitud;
-    @OneToMany(cascade=CascadeType.ALL)
+    
+    @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+    private List<Comentario> comentarios;
+    @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+    private List <Notificacion> notificaciones;
+    @ManyToMany
+    @JoinTable(name="jn_megusta_id",joinColumns=@JoinColumn(name="user_fk"),inverseJoinColumns=@JoinColumn(name="megusta_fk"))
+    private Set<Usuario> megusta;
+    @ManyToMany
+    @JoinTable(name="jn_sigue_id",joinColumns=@JoinColumn(name="user_fk"),inverseJoinColumns=@JoinColumn(name="sigue_fk"))
+    private Set<Usuario> sigue;
+    @ManyToMany
+    @JoinTable(name="jn_asiste_id",joinColumns=@JoinColumn(name="user_fk"),inverseJoinColumns=@JoinColumn(name="asiste_fk"))
+    private Set<Usuario> asiste;
+    
+   
+
+    public Long getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
+    }
 
     public String getNombre() {
         return nombre;
@@ -45,12 +81,20 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getPassword() {
-        return password_hash;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setPassword(String password) {
-        this.password_hash = password;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getPseudonimo() {
+        return pseudonimo;
+    }
+
+    public void setPseudonimo(String pseudonimo) {
+        this.pseudonimo = pseudonimo;
     }
 
     public String getEmail() {
@@ -61,53 +105,114 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public Long getPos_h() {
-        return longitud;
-    }
-
-    public void setPos_h(Long pos_h) {
-        this.longitud = pos_h;
-    }
-
-    public Long getPos_v() {
-        return latitud;
-    }
-
-    public void setPos_v(Long pos_v) {
-        this.latitud = pos_v;
-    }
-
-    public boolean isNotificaciones() {
+    public boolean isEmail_notifier() {
         return email_notifier;
     }
 
-    public void setNotificaciones(boolean notificaciones) {
-        this.email_notifier = notificaciones;
+    public void setEmail_notifier(boolean email_notifier) {
+        this.email_notifier = email_notifier;
     }
 
-    public Long getId() {
-        return id;
+    public String getPassword_hash() {
+        return password_hash;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPassword_hash(String password_hash) {
+        this.password_hash = password_hash;
+    }
+
+    public String getSal() {
+        return sal;
+    }
+
+    public void setSal(String sal) {
+        this.sal = sal;
+    }
+
+    public Long getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Long longitud) {
+        this.longitud = longitud;
+    }
+
+    public Long getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Long latitud) {
+        this.latitud = latitud;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Notificacion> getNotificaciones() {
+        return notificaciones;
+    }
+
+    public void setNotificaciones(List<Notificacion> notificaciones) {
+        this.notificaciones = notificaciones;
+    }
+
+    public Set<Usuario> getMegusta() {
+        return megusta;
+    }
+
+    public void setMegusta(Set<Usuario> megusta) {
+        this.megusta = megusta;
+    }
+
+    public Set<Usuario> getSigue() {
+        return sigue;
+    }
+
+    public void setSigue(Set<Usuario> sigue) {
+        this.sigue = sigue;
+    }
+
+    public Set<Usuario> getAsiste() {
+        return asiste;
+    }
+
+    public void setAsiste(Set<Usuario> asiste) {
+        this.asiste = asiste;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id_usuario);
+        hash = 37 * hash + Objects.hashCode(this.pseudonimo);
+        hash = 37 * hash + Objects.hashCode(this.email);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Usuario other = (Usuario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (!Objects.equals(this.pseudonimo, other.pseudonimo)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_usuario, other.id_usuario)) {
             return false;
         }
         return true;
@@ -115,7 +220,10 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg_jpa.Usuario[ id=" + id + " ]";
+        return "Usuario{" + "id_usuario=" + id_usuario + ", nombre=" + nombre + ", apellidos=" + apellidos + ", pseudonimo=" + pseudonimo + ", email=" + email + ", email_notifier=" + email_notifier + ", password_hash=" + password_hash + ", sal=" + sal + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + '}';
     }
+
+    
+
 
 }

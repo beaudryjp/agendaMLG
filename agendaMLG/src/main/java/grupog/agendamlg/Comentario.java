@@ -24,29 +24,47 @@ public class Comentario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_comment;
+    private Long id_comentario;
     private String mensaje;
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Temporal(TemporalType.TIME)
     private Time hora;
-    @ManyToOne
+    @ManyToOne(optional=true)
     private Evento evento;
-    @ManyToOne
+    @ManyToOne(optional=true)
     private Usuario usuario;
 
-    public Long getId() {
-        return id_comment;
+    public Long getId_comentario() {
+        return id_comentario;
     }
 
-    public void setId(Long id) {
-        this.id_comment = id;
+    public void setId_comentario(Long id_comentario) {
+        this.id_comentario = id_comentario;
     }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+   
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id_comment != null ? id_comment.hashCode() : 0);
+        hash += (id_comentario != null ? id_comentario.hashCode() : 0);
         return hash;
     }
 
@@ -81,7 +99,7 @@ public class Comentario implements Serializable {
             return false;
         }
         Comentario other = (Comentario) object;
-        if ((this.id_comment == null && other.id_comment != null) || (this.id_comment != null && !this.id_comment.equals(other.id_comment))) {
+        if ((this.id_comentario == null && other.id_comentario != null) || (this.id_comentario != null && !this.id_comentario.equals(other.id_comentario))) {
             return false;
         }
         return true;
@@ -89,7 +107,9 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg_jpa.Comentario[ id=" + id_comment + " ]";
+        return "Comentario{" + "id_comentario=" + id_comentario + ", mensaje=" + mensaje + ", fecha=" + fecha + ", hora=" + hora + ", evento=" + evento + ", usuario=" + usuario + '}';
     }
+
+    
 
 }

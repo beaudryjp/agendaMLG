@@ -2,11 +2,16 @@
 package grupog.agendamlg;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
 * Etiqueta.java
@@ -15,38 +20,66 @@ import javax.persistence.Id;
 * @author Jean Paul Beaudry
 */
 @Entity
+@Table( uniqueConstraints = @UniqueConstraint(columnNames = {"nombre"}))
 public class Etiqueta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id_etiqueta;
     @Column(name="nombre", nullable=false)
     private String nombre;
+    @ManyToMany(mappedBy="Evento")
+    private Evento evento;
 
-    public Long getId() {
-        return id;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+
+    public Long getId_etiqueta() {
+        return id_etiqueta;
+    }
+
+    public void setId_etiqueta(Long id_etiqueta) {
+        this.id_etiqueta = id_etiqueta;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.id_etiqueta);
+        hash = 97 * hash + Objects.hashCode(this.nombre);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Etiqueta)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Etiqueta other = (Etiqueta) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Etiqueta other = (Etiqueta) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_etiqueta, other.id_etiqueta)) {
             return false;
         }
         return true;
@@ -54,7 +87,9 @@ public class Etiqueta implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg.Etiqueta[ id=" + id + " ]";
+        return "Etiqueta{" + "id_etiqueta=" + id_etiqueta + ", nombre=" + nombre + ", evento=" + evento + '}';
     }
+
+   
 
 }

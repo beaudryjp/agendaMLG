@@ -2,6 +2,7 @@
 package grupog.agendamlg;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
 * Localidad.java
@@ -20,18 +23,30 @@ import javax.persistence.OneToOne;
 * @author Jean Paul Beaudry
 */
 @Entity
+@Table( uniqueConstraints = @UniqueConstraint(columnNames = {"nombre"}))
+
 public class Localidad implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="localidad_id")
-    private Long id;
+    @Column(name="id_localidad")
+    private Long id_localidad;
     @Column(name="nombre", nullable=false)
     private String nombre;
     @ManyToOne()
     private Provincia provincia;
+    @OneToMany()
+    private Evento evento;
 
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+    
     public Provincia getProvincia() {
         return provincia;
     }
@@ -49,29 +64,38 @@ public class Localidad implements Serializable {
         this.nombre = nombre;
     }
 
-    public Long getId() {
-        return id;
+    public Long getId_localidad() {
+        return id_localidad;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_localidad(Long id_localidad) {
+        this.id_localidad = id_localidad;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id_localidad);
+        hash = 59 * hash + Objects.hashCode(this.nombre);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Localidad)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Localidad other = (Localidad) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Localidad other = (Localidad) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.id_localidad, other.id_localidad)) {
             return false;
         }
         return true;
@@ -79,7 +103,11 @@ public class Localidad implements Serializable {
 
     @Override
     public String toString() {
-        return "grupog.agendamlg_jpa.Localidad[ id=" + id + " ]";
+        return "Localidad{" + "id_localidad=" + id_localidad + ", nombre=" + nombre + ", provincia=" + provincia + ", evento=" + evento + '}';
     }
+
+   
+
+    
 
 }
