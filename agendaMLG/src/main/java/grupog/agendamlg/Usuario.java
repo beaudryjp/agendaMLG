@@ -54,14 +54,14 @@ public class Usuario implements Serializable {
     @OneToMany(cascade=CascadeType.ALL)
     private List <Notificacion> notificaciones;
     @ManyToMany
-    @JoinTable(name="jn_megusta_id",joinColumns=@JoinColumn(name="user_fk"),inverseJoinColumns=@JoinColumn(name="megusta_fk"))
-    private Set<Usuario> megusta;
+    @JoinTable(name="jn_megusta_id",joinColumns=@JoinColumn(name="id_usuario"),inverseJoinColumns=@JoinColumn(name="id_evento"))
+    private Set<Evento> megusta;
     @ManyToMany
-    @JoinTable(name="jn_sigue_id",joinColumns=@JoinColumn(name="user_fk"),inverseJoinColumns=@JoinColumn(name="sigue_fk"))
-    private Set<Usuario> sigue;
+    @JoinTable(name="jn_sigue_id",joinColumns=@JoinColumn(name="id_usuario"),inverseJoinColumns=@JoinColumn(name="id_evento"))
+    private Set<Evento> sigue;
     @ManyToMany
-    @JoinTable(name="jn_asiste_id",joinColumns=@JoinColumn(name="user_fk"),inverseJoinColumns=@JoinColumn(name="asiste_fk"))
-    private Set<Usuario> asiste;
+    @JoinTable(name="jn_asiste_id",joinColumns=@JoinColumn(name="id_usuario"),inverseJoinColumns=@JoinColumn(name="id_evento"))
+    private Set<Evento> asiste;
     @OneToMany
     private Set <Rol> rol;
 
@@ -171,27 +171,27 @@ public class Usuario implements Serializable {
         this.notificaciones = notificaciones;
     }
 
-    public Set<Usuario> getMegusta() {
+    public Set<Evento> getMegusta() {
         return megusta;
     }
 
-    public void setMegusta(Set<Usuario> megusta) {
+    public void setMegusta(Set<Evento> megusta) {
         this.megusta = megusta;
     }
 
-    public Set<Usuario> getSigue() {
+    public Set<Evento> getSigue() {
         return sigue;
     }
 
-    public void setSigue(Set<Usuario> sigue) {
+    public void setSigue(Set<Evento> sigue) {
         this.sigue = sigue;
     }
 
-    public Set<Usuario> getAsiste() {
+    public Set<Evento> getAsiste() {
         return asiste;
     }
 
-    public void setAsiste(Set<Usuario> asiste) {
+    public void setAsiste(Set<Evento> asiste) {
         this.asiste = asiste;
     }
 

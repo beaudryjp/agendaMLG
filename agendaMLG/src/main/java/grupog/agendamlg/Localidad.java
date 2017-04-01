@@ -34,9 +34,9 @@ public class Localidad implements Serializable {
     private Long id_localidad;
     @Column(name="nombre", nullable=false)
     private String nombre;
-    @ManyToOne()
+    @ManyToOne
     private Provincia provincia;
-    @OneToMany()
+    @OneToMany(mappedBy="localidad")
     private Evento evento;
 
     public Evento getEvento() {

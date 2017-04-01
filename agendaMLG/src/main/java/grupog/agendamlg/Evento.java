@@ -48,29 +48,29 @@ public class Evento implements Serializable {
     private Long latitud;
     
     @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="jn_comentarios_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_comentario"))
     private List<Comentario> comentarios;
     @ManyToMany
-    @JoinTable(name="jn_etiqueta_id",joinColumns=@JoinColumn(name="evento_fk"),inverseJoinColumns=@JoinColumn(name="etiqueta_fk"))
+    @JoinTable(name="jn_etiqueta_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_etiqueta"))
     private Set<Etiqueta> etiqueta;
     @ManyToOne
     private Localidad localidad;
     @OneToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="jn_notificaciones_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_notificacion"))
     private List <Notificacion> notificaciones;
-    @ManyToMany(mappedBy="Usuario")
-    
+    @ManyToMany(mappedBy="megusta")
     private Set<Usuario> megusta;
-    @ManyToMany(mappedBy="Usuario")
-    
+    @ManyToMany(mappedBy="sigue")
     private Set<Usuario> sigue;
-    @ManyToMany(mappedBy="Usuario")
-   
+    @ManyToMany(mappedBy="asiste")
     private Set<Usuario> asiste;
     
     @OneToMany
+    @JoinTable(name="jn_rol_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_rol"))
     private Set <Rol> rol;
     
     @ManyToMany
-    @JoinTable(name="jn_destinatario_id",joinColumns=@JoinColumn(name="evento_fk"),inverseJoinColumns=@JoinColumn(name="destinatario_fk"))
+    @JoinTable(name="jn_destinatario_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_destinatario"))
     private Set<Destinatario> destinatario;
 
     public Set<Destinatario> getDestinatario() {

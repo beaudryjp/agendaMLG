@@ -1,4 +1,3 @@
-
 package grupog.agendamlg;
 
 import java.io.Serializable;
@@ -13,11 +12,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
-* Comentario.java
-*
-* Mar 31, 2017
-* @author Jean Paul Beaudry
-*/
+ * Comentario.java
+ *
+ * Mar 31, 2017
+ *
+ * @author Jean Paul Beaudry
+ */
 @Entity
 public class Comentario implements Serializable {
 
@@ -30,9 +30,9 @@ public class Comentario implements Serializable {
     private Date fecha;
     @Temporal(TemporalType.TIME)
     private Time hora;
-    @ManyToOne(optional=true)
+    @ManyToOne(optional = true)
     private Evento evento;
-    @ManyToOne(optional=true)
+    @ManyToOne(optional = true)
     private Usuario usuario;
 
     public Long getId_comentario() {
@@ -58,8 +58,6 @@ public class Comentario implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-   
 
     @Override
     public int hashCode() {
@@ -109,7 +107,5 @@ public class Comentario implements Serializable {
     public String toString() {
         return "Comentario{" + "id_comentario=" + id_comentario + ", mensaje=" + mensaje + ", fecha=" + fecha + ", hora=" + hora + ", evento=" + evento + ", usuario=" + usuario + '}';
     }
-
-    
 
 }

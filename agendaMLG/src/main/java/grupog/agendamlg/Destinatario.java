@@ -29,7 +29,7 @@ public class Destinatario implements Serializable {
     private Long id_destinatario;
     @Column(name="descripcion", nullable=false)
     private String descripcion;
-    @ManyToMany(mappedBy="Evento")
+    @ManyToMany(mappedBy="destinatario")
     private Evento evento;
 
     public Evento getEvento() {

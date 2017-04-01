@@ -31,17 +31,17 @@ public class Notificacion implements Serializable {
     @Temporal(TemporalType.TIME)
     private Time hora;
     @ManyToOne(optional=true)
-    private Usuario user;
+    private Usuario usuario;
     @ManyToOne(optional=true)
     private Evento evento;
     
 
-    public Usuario getUser() {
-        return user;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUser(Usuario user) {
-        this.user = user;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Evento getEvento() {
@@ -108,7 +108,7 @@ public class Notificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "Notificacion{" + "id_notificacion=" + id_notificacion + ", mensaje=" + mensaje + ", fecha=" + fecha + ", hora=" + hora + ", user=" + user + ", evento=" + evento + '}';
+        return "Notificacion{" + "id_notificacion=" + id_notificacion + ", mensaje=" + mensaje + ", fecha=" + fecha + ", hora=" + hora + ", user=" + usuario + ", evento=" + evento + '}';
     }
 
     

@@ -29,7 +29,7 @@ public class Etiqueta implements Serializable {
     private Long id_etiqueta;
     @Column(name="nombre", nullable=false)
     private String nombre;
-    @ManyToMany(mappedBy="Evento")
+    @ManyToMany(mappedBy="etiqueta")
     private Evento evento;
 
     public String getNombre() {

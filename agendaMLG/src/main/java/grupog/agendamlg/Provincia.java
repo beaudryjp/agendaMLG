@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -30,7 +32,7 @@ public class Provincia implements Serializable {
     private Long id_provincia;
     @Column(name="nombre", nullable=false)
     private String nombre;
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.ALL,mappedBy="provincia")
     private Set<Localidad> localidades;
 
     public Long getId_provincia() {
