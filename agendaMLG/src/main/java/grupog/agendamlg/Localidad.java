@@ -29,8 +29,17 @@ public class Localidad implements Serializable {
     private Long id;
     @Column(name="nombre", nullable=false)
     private String nombre;
-    @ManyToOne
+    @ManyToOne()
     private Provincia provincia;
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+    
 
     public String getNombre() {
         return nombre;
