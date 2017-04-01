@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -32,14 +33,20 @@ public class Tipo_Rol implements Serializable {
     @Column(name="nombre_rol", nullable=false)
     private String nombre_rol;
     @ManyToMany
-    @JoinTable(
-      name = "privilegios_rol",
-      joinColumns = @JoinColumn(
-      name="id_rol"),
-      inverseJoinColumns=@JoinColumn(
-      name="id_privilegio"))
+    @JoinTable(name = "privilegios_rol",joinColumns = @JoinColumn(name="id_rol"),inverseJoinColumns=@JoinColumn(name="id_privilegio"))
     private Set<Privilegio> privilegios;
+    @OneToMany
+    private Set <Rol> rol;
 
+    public Set<Rol> getRol() {
+        return rol;
+    }
+
+    public void setRol(Set<Rol> rol) {
+        this.rol = rol;
+    }
+
+    
     public Long getId_rol() {
         return id_rol;
     }
@@ -95,8 +102,10 @@ public class Tipo_Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "Tipo_Rol{" + "id_rol=" + id_rol + ", nombre_rol=" + nombre_rol + ", privilegios=" + privilegios + '}';
+        return "Tipo_Rol{" + "id_rol=" + id_rol + ", nombre_rol=" + nombre_rol + ", privilegios=" + privilegios + ", rol=" + rol + '}';
     }
+
+    
 
     
     

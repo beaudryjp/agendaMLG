@@ -30,7 +30,7 @@ public class Provincia implements Serializable {
     private Long id_provincia;
     @Column(name="nombre", nullable=false)
     private String nombre;
-    @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+    @OneToMany(cascade=CascadeType.ALL)
     private Set<Localidad> localidades;
 
     public Long getId_provincia() {

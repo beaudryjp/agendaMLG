@@ -35,9 +35,6 @@ public class Privilegio implements Serializable{
     private String nombre_privilegio;
     private String descripcion;
 
-
-    
- 
     @ManyToMany
     private Set<Tipo_Rol> roles;
 

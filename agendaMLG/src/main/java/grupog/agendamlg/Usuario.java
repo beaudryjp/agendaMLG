@@ -49,9 +49,9 @@ public class Usuario implements Serializable {
     private Long longitud;
     private Long latitud;
     
-    @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Comentario> comentarios;
-    @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+    @OneToMany(cascade=CascadeType.ALL)
     private List <Notificacion> notificaciones;
     @ManyToMany
     @JoinTable(name="jn_megusta_id",joinColumns=@JoinColumn(name="user_fk"),inverseJoinColumns=@JoinColumn(name="megusta_fk"))
@@ -62,6 +62,16 @@ public class Usuario implements Serializable {
     @ManyToMany
     @JoinTable(name="jn_asiste_id",joinColumns=@JoinColumn(name="user_fk"),inverseJoinColumns=@JoinColumn(name="asiste_fk"))
     private Set<Usuario> asiste;
+    @OneToMany
+    private Set <Rol> rol;
+
+    public Set<Rol> getRol() {
+        return rol;
+    }
+
+    public void setRol(Set<Rol> rol) {
+        this.rol = rol;
+    }
     
    
 
@@ -220,8 +230,10 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id_usuario=" + id_usuario + ", nombre=" + nombre + ", apellidos=" + apellidos + ", pseudonimo=" + pseudonimo + ", email=" + email + ", email_notifier=" + email_notifier + ", password_hash=" + password_hash + ", sal=" + sal + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + '}';
+        return "Usuario{" + "id_usuario=" + id_usuario + ", nombre=" + nombre + ", apellidos=" + apellidos + ", pseudonimo=" + pseudonimo + ", email=" + email + ", email_notifier=" + email_notifier + ", password_hash=" + password_hash + ", sal=" + sal + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + ", rol=" + rol + '}';
     }
+
+    
 
     
 

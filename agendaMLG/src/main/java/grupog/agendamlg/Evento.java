@@ -47,14 +47,14 @@ public class Evento implements Serializable {
     private Long longitud;
     private Long latitud;
     
-    @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Comentario> comentarios;
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name="jn_etiqueta_id",joinColumns=@JoinColumn(name="evento_fk"),inverseJoinColumns=@JoinColumn(name="etiqueta_fk"))
     private Set<Etiqueta> etiqueta;
-    @ManyToOne(cascade=CascadeType.ALL,optional=true)
+    @ManyToOne
     private Localidad localidad;
-    @OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+    @OneToMany(cascade=CascadeType.ALL)
     private List <Notificacion> notificaciones;
     @ManyToMany(mappedBy="Usuario")
     
@@ -66,7 +66,21 @@ public class Evento implements Serializable {
    
     private Set<Usuario> asiste;
     
+    @OneToMany
+    private Set <Rol> rol;
     
+    @ManyToMany
+    @JoinTable(name="jn_destinatario_id",joinColumns=@JoinColumn(name="evento_fk"),inverseJoinColumns=@JoinColumn(name="destinatario_fk"))
+    private Set<Destinatario> destinatario;
+
+    public Set<Destinatario> getDestinatario() {
+        return destinatario;
+    }
+
+    public void setDestinatario(Set<Destinatario> destinatario) {
+        this.destinatario = destinatario;
+    }
+   
     
     public Long getId_evento() {
         return id_evento;
@@ -196,6 +210,15 @@ public class Evento implements Serializable {
         this.asiste = asiste;
     }
 
+    public Set<Rol> getRol() {
+        return rol;
+    }
+
+    public void setRol(Set<Rol> rol) {
+        this.rol = rol;
+    }
+    
+
     
     @Override
     public int hashCode() {
@@ -218,8 +241,10 @@ public class Evento implements Serializable {
 
     @Override
     public String toString() {
-        return "Evento{" + "id_evento=" + id_evento + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", hora=" + hora + ", precio=" + precio + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", etiqueta=" + etiqueta + ", localidad=" + localidad + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + '}';
+        return "Evento{" + "id_evento=" + id_evento + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", hora=" + hora + ", precio=" + precio + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", etiqueta=" + etiqueta + ", localidad=" + localidad + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + ", rol=" + rol + ", destinatario=" + destinatario + '}';
     }
+
+    
 
     
 
