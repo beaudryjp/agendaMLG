@@ -41,10 +41,10 @@ public class Evento implements Serializable {
     private Date fecha_inicio;
     @Temporal(TemporalType.DATE)
     private Date fecha_fin;
-    private Time hora;
+    private String horario;
     private String precio;
-    private Long longitud;
-    private Long latitud;
+    private Double longitud;
+    private Double latitud;
     
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable(name="jn_comentarios_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_comentario"))
@@ -72,6 +72,17 @@ public class Evento implements Serializable {
     @JoinTable(name="jn_destinatario_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_destinatario"))
     private Set<Destinatario> destinatario;
 
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    
+
+    
     public Set<Destinatario> getDestinatario() {
         return destinatario;
     }
@@ -121,14 +132,6 @@ public class Evento implements Serializable {
         this.fecha_fin = fecha_fin;
     }
 
-    public Time getHora() {
-        return hora;
-    }
-
-    public void setHora(Time hora) {
-        this.hora = hora;
-    }
-
     public String getPrecio() {
         return precio;
     }
@@ -137,19 +140,19 @@ public class Evento implements Serializable {
         this.precio = precio;
     }
 
-    public Long getLongitud() {
+    public Double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(Long longitud) {
+    public void setLongitud(Double longitud) {
         this.longitud = longitud;
     }
 
-    public Long getLatitud() {
+    public Double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(Long latitud) {
+    public void setLatitud(Double latitud) {
         this.latitud = latitud;
     }
 
@@ -240,8 +243,13 @@ public class Evento implements Serializable {
 
     @Override
     public String toString() {
-        return "Evento{" + "id_evento=" + id_evento + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", hora=" + hora + ", precio=" + precio + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", etiqueta=" + etiqueta + ", localidad=" + localidad + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + ", rol=" + rol + ", destinatario=" + destinatario + '}';
+        return "Evento{" + "id_evento=" + id_evento + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", horario=" + horario + ", precio=" + precio + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", etiqueta=" + etiqueta + ", localidad=" + localidad + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + ", rol=" + rol + ", destinatario=" + destinatario + '}';
     }
+
+    
+    
+    
+    
 
     
 

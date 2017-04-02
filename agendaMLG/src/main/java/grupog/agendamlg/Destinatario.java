@@ -86,6 +86,8 @@ public class Destinatario implements Serializable {
         return true;
     }
 
+    
+
     @Override
     public String toString() {
         return "Destinatario{" + "id_destinatario=" + id_destinatario + ", descripcion=" + descripcion + ", evento=" + evento + '}';
