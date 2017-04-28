@@ -1,8 +1,9 @@
 
 package grupog.agendamlg;
 
+import com.google.common.collect.ComparisonChain;
 import java.io.Serializable;
-import java.sql.Time;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +28,7 @@ import javax.persistence.TemporalType;
 * @author Jean Paul Beaudry
 */
 @Entity
-public class Evento implements Serializable {
+public class Evento implements Serializable, Comparable{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,8 +44,8 @@ public class Evento implements Serializable {
     private Date fecha_fin;
     private String horario;
     private String precio;
-    private Double longitud;
-    private Double latitud;
+    private double longitud;
+    private double latitud;
     
     @OneToMany(cascade=CascadeType.ALL)
     @JoinTable(name="jn_comentarios_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_comentario"))
@@ -64,31 +65,29 @@ public class Evento implements Serializable {
     @ManyToMany(mappedBy="asiste")
     private Set<Usuario> asiste;
     
-    @OneToMany
-    //@JoinTable(name="jn_rol_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="pk"))
-    private Set<Rol> rol;
+//    @OneToMany
+//    //@JoinTable(name="jn_rol_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="pk"))
+//    private Set<Rol> rol;
     
     @ManyToMany
     @JoinTable(name="jn_destinatario_id",joinColumns=@JoinColumn(name="id_evento"),inverseJoinColumns=@JoinColumn(name="id_destinatario"))
     private Set<Destinatario> destinatario;
 
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    
-
-    
     public Set<Destinatario> getDestinatario() {
         return destinatario;
     }
 
     public void setDestinatario(Set<Destinatario> destinatario) {
         this.destinatario = destinatario;
+    }
+    
+    
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horarios) {
+        this.horario = horarios;
     }
    
     
@@ -140,19 +139,19 @@ public class Evento implements Serializable {
         this.precio = precio;
     }
 
-    public Double getLongitud() {
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(Double longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
-    public Double getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(Double latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
@@ -211,16 +210,6 @@ public class Evento implements Serializable {
     public void setAsiste(Set<Usuario> asiste) {
         this.asiste = asiste;
     }
-
-    public Set<Rol> getRol() {
-        return rol;
-    }
-
-    public void setRol(Set<Rol> rol) {
-        this.rol = rol;
-    }
-    
-
     
     @Override
     public int hashCode() {
@@ -243,16 +232,18 @@ public class Evento implements Serializable {
 
     @Override
     public String toString() {
-        return "Evento{" + "id_evento=" + id_evento + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", horario=" + horario + ", precio=" + precio + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", etiqueta=" + etiqueta + ", localidad=" + localidad + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + ", rol=" + rol + ", destinatario=" + destinatario + '}';
+        return "Evento{" + "id_evento=" + id_evento + ", titulo=" + titulo + ", descripcion=" + descripcion + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", horario=" + horario + ", precio=" + precio + ", longitud=" + longitud + ", latitud=" + latitud + '}';
     }
 
-    
-    
-    
-    
-
-    
-
-    
+    @Override
+    public int compareTo(Object o) {
+        Evento e2 = (Evento)o;
+        return ComparisonChain.start()
+                .compare(this.getTitulo(), e2.getTitulo())
+                .compare(this.getLocalidad(), e2.getLocalidad())
+                .compare(this.getFecha_inicio(), e2.getFecha_inicio())
+                .compare(this.getFecha_fin(), e2.getFecha_fin())
+                .result(); 
+    }
 
 }

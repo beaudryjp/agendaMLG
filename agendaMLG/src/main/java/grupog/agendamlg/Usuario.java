@@ -1,6 +1,7 @@
 
 package grupog.agendamlg;
 
+import com.google.common.collect.ComparisonChain;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +9,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,8 +29,13 @@ import javax.persistence.UniqueConstraint;
 */
 @Entity
 @Table( uniqueConstraints = @UniqueConstraint(columnNames = {"email","pseudonimo","sal"}))
-public class Usuario implements Serializable {
-
+public class Usuario implements Serializable, Comparable {
+    
+    protected enum Tipo_Rol {
+        REGISTRADO,
+        VALIDADO,
+        REDACTOR;
+    }
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,6 +46,7 @@ public class Usuario implements Serializable {
     private String apellidos;
     @Column(name="pseudonimo", nullable=false)
     private String pseudonimo;
+
     @Column(name="email", nullable=false)
     private String email;
     @Column(name="email_notifier", nullable=false)
@@ -46,8 +55,10 @@ public class Usuario implements Serializable {
     private String password_hash;
     @Column(name="sal", nullable=false)
     private String sal;
-    private Double longitud;
-    private Double latitud;
+    private double longitud;
+    private double latitud; 
+    @Enumerated(EnumType.STRING)
+    private Tipo_Rol rol;
     
     @OneToMany(cascade=CascadeType.ALL)
     private List<Comentario> comentarios;
@@ -62,17 +73,6 @@ public class Usuario implements Serializable {
     @ManyToMany
     @JoinTable(name="jn_asiste_id",joinColumns=@JoinColumn(name="id_usuario"),inverseJoinColumns=@JoinColumn(name="id_evento"))
     private Set<Evento> asiste;
-    @OneToMany
-    private Set <Rol> rol;
-
-    public Set<Rol> getRol() {
-        return rol;
-    }
-
-    public void setRol(Set<Rol> rol) {
-        this.rol = rol;
-    }
-    
    
 
     public Long getId_usuario() {
@@ -139,19 +139,19 @@ public class Usuario implements Serializable {
         this.sal = sal;
     }
 
-    public Double getLongitud() {
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(Double longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
-    public Double getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(Double latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
@@ -194,6 +194,14 @@ public class Usuario implements Serializable {
     public void setAsiste(Set<Evento> asiste) {
         this.asiste = asiste;
     }
+    
+    public Tipo_Rol getRol_usuario() {
+        return rol;
+    }
+
+    public void setRol_usuario(Tipo_Rol rol) {
+        this.rol = rol;
+    }
 
     @Override
     public int hashCode() {
@@ -233,9 +241,13 @@ public class Usuario implements Serializable {
         return "Usuario{" + "id_usuario=" + id_usuario + ", nombre=" + nombre + ", apellidos=" + apellidos + ", pseudonimo=" + pseudonimo + ", email=" + email + ", email_notifier=" + email_notifier + ", password_hash=" + password_hash + ", sal=" + sal + ", longitud=" + longitud + ", latitud=" + latitud + ", comentarios=" + comentarios + ", notificaciones=" + notificaciones + ", megusta=" + megusta + ", sigue=" + sigue + ", asiste=" + asiste + ", rol=" + rol + '}';
     }
 
-    
-
-    
-
-
+    @Override
+    public int compareTo(Object o) {
+        Usuario us = (Usuario)o;
+        return ComparisonChain.start()
+                .compare(this.getNombre(), us.getNombre())
+                .compare(this.getApellidos(), us.getApellidos())
+                .compare(this.getEmail(), us.getEmail())
+                .result(); 
+    }
 }

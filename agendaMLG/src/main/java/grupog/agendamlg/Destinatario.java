@@ -21,7 +21,7 @@ import javax.persistence.UniqueConstraint;
 */
 @Entity
 @Table( uniqueConstraints = @UniqueConstraint(columnNames = {"descripcion"}))
-public class Destinatario implements Serializable {
+public class Destinatario implements Serializable, Comparable<Destinatario> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -86,15 +86,13 @@ public class Destinatario implements Serializable {
         return true;
     }
 
-    
-
     @Override
     public String toString() {
         return "Destinatario{" + "id_destinatario=" + id_destinatario + ", descripcion=" + descripcion + ", evento=" + evento + '}';
     }
 
-    
-
-    
-
+    @Override
+    public int compareTo(Destinatario other) {
+        return this.getDescripcion().compareTo(other.getDescripcion());
+    }
 }

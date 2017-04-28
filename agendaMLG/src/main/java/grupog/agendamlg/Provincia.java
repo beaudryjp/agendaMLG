@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -41,6 +39,14 @@ public class Provincia implements Serializable {
 
     public void setId_provincia(Long id) {
         this.id_provincia = id;
+    }
+
+    public Set<Localidad> getLocalidades() {
+        return localidades;
+    }
+
+    public void setLocalidades(Set<Localidad> localidades) {
+        this.localidades = localidades;
     }
 
     public String getNombre() {

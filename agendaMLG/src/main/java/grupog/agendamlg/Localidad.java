@@ -6,14 +6,11 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -26,7 +23,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table( uniqueConstraints = @UniqueConstraint(columnNames = {"nombre"}))
 
-public class Localidad implements Serializable {
+public class Localidad implements Serializable, Comparable<Localidad> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -105,6 +102,11 @@ public class Localidad implements Serializable {
     @Override
     public String toString() {
         return "Localidad{" + "id_localidad=" + id_localidad + ", nombre=" + nombre + ", provincia=" + provincia + ", evento=" + evento + '}';
+    }
+
+    @Override
+    public int compareTo(Localidad o) {
+        return this.getNombre().compareTo(o.getNombre());
     }
 
    

@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -22,7 +21,7 @@ import javax.persistence.UniqueConstraint;
 */
 @Entity
 @Table( uniqueConstraints = @UniqueConstraint(columnNames = {"nombre"}))
-public class Etiqueta implements Serializable {
+public class Etiqueta implements Serializable, Comparable<Etiqueta>  {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -91,6 +90,9 @@ public class Etiqueta implements Serializable {
         return "Etiqueta{" + "id_etiqueta=" + id_etiqueta + ", nombre=" + nombre + ", evento=" + evento + '}';
     }
 
+    @Override
+    public int compareTo(Etiqueta other) {
+        return this.getNombre().compareTo(other.getNombre());
+    }
    
-
 }
